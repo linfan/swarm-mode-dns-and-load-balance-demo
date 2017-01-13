@@ -3,8 +3,24 @@ whoami
 
 Simple HTTP docker service that prints it's container ID
 
-    $ docker run -d -p 8000:8000 --name whoami -t jwilder/whoami
-    736ab83847bb12dddd8b09969433f3a02d64d5b0be48f7a5c59a594e3a6a3541
+## Build it
+
+    $ docker build -t flin/whoami .
+
+## Run it
+
+    $ docker run -dt -p 8000:8000 --name whoami flin/whoami
     
-    $ curl $(hostname --all-ip-addresses | awk '{print $1}'):8000
-    I'm 736ab83847bb
+    $ curl $(hostname -i):8000
+    I'm d819ec8ff4cd
+
+## Run it in swarm mode
+
+    $ docker service create --name whoami --replicas 3 --publish 8000:8000 flin/whoami
+    
+    $ curl $(hostname -i):8000
+    I'm d819ec8ff4cd
+    $ curl $(hostname -i):8000
+    I'm c2bf30b3fb17
+    $ curl $(hostname -i):8000
+    I'm a2ccf532b47d
