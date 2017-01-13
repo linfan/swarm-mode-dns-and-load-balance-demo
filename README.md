@@ -1,7 +1,12 @@
-whoami
+whoami and curl
 ======
 
-Simple HTTP docker service that prints it's container ID
+Demo for swarm mode servcie dns and load balance.
+
+## Docker images
+
+- `whoami`: Simple HTTP docker service that prints it's container ID
+- `curl`: Simple HTTP client image base on alpine
 
 ## Build it
 
