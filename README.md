@@ -5,22 +5,22 @@ Simple HTTP docker service that prints it's container ID
 
 ## Build it
 
-    $ docker build -t flin/whoami .
-
-## Run it
-
-    $ docker run -dt -p 8000:8000 --name whoami flin/whoami
-    
-    $ curl $(hostname -i):8000
-    I'm d819ec8ff4cd
+    $ docker build -t flin/whoami whoami
+    $ docker build -t flin/curl curl 
 
 ## Run it in swarm mode
 
-    $ docker service create --name whoami --replicas 3 --publish 8000:8000 flin/whoami
-    
-    $ curl $(hostname -i):8000
+    $ docker network create demo --driver overlay
+    $ docker service create --name whoami --network demo --replicas 3 --publish 8000:8000 flin/whoami
+    $ docker service create --name curl --network demo flin/curl
+
+SSH into the node which curl container located, find its id as <curl-container-id>.
+
+Try to access whoami service via its name.
+
+    $ docker exec <curl-container-id> curl -s whoami:8000
     I'm d819ec8ff4cd
-    $ curl $(hostname -i):8000
+    $ docker exec <curl-container-id> curl -s whoami:8000
     I'm c2bf30b3fb17
-    $ curl $(hostname -i):8000
+    $ docker exec <curl-container-id> curl -s whoami:8000
     I'm a2ccf532b47d
