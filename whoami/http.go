@@ -8,9 +8,9 @@ import (
 )
 
 func main() {
-    port := os.Getenv("PORT")
+    port := os.Getenv("WHOAMI_PORT")
     if port == "" {
-        port = "8080"
+        port = "8000"
     }
 
     fmt.Fprintf(os.Stdout, "Listening on :%s\n", port)
